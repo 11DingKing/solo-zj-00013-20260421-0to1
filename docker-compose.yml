@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: room_booking_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: room_booking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    platform: linux/arm64
+
+  redis:
+    image: redis:7-alpine
+    container_name: room_booking_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    platform: linux/arm64
+
+volumes:
+  postgres_data:
