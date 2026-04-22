@@ -10,8 +10,12 @@ const router = Router();
 const createBookingSchema = z.object({
   roomId: z.string().min(1, '会议室不能为空'),
   title: z.string().min(1, '会议主题不能为空'),
-  startTime: z.string().datetime(),
-  endTime: z.string().datetime(),
+  startTime: z.coerce.date().refine((date) => !isNaN(date.getTime()), {
+    message: '开始时间格式无效',
+  }),
+  endTime: z.coerce.date().refine((date) => !isNaN(date.getTime()), {
+    message: '结束时间格式无效',
+  }),
   attendees: z.number().int().min(1, '参会人数必须至少为1'),
 });
 
@@ -46,8 +50,7 @@ const checkConflict = async (
 router.post('/', authenticateToken, async (req: Request, res: Response) => {
   try {
     const data = createBookingSchema.parse(req.body);
-    const startTime = new Date(data.startTime);
-    const endTime = new Date(data.endTime);
+    const { startTime, endTime } = data;
 
     if (startTime >= endTime) {
       return res.status(400).json({ error: '开始时间必须早于结束时间' });
