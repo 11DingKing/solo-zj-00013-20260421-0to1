@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth, isAdmin } from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { api } from '@/lib/api';
-import { Room, Equipment, equipmentLabels } from '@/types';
+import { Room, Equipment, equipmentLabels, isAdmin } from '@/types';
 
 const equipmentOptions = [
   { value: Equipment.PROJECTOR, label: '投影仪' },

@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
-import { useAuth, isAdmin } from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
+import { isAdmin } from '@/types';
 
 interface LayoutProps {
   children: ReactNode;
